@@ -86,8 +86,6 @@ int main(int argc, char *argv[]){
     const uint32_t MaxIdleTime = 10*60*OS_TicksPerSecond(); // spider go to sleep when exceed this time
 //    const uint32_t MaxIdleTime = 10*60*OS_TicksPerSecond(); // spider go to sleep when exceed this time
 
-	printf("===== Spider Demo =====\r\n"); 
- 
 
 	printf("Spider Init & Standup\r\n");
 	if (!Spider.Init()){
@@ -96,7 +94,12 @@ int main(int argc, char *argv[]){
 		if (!Spider.Standup())
 			printf("Spilder Standup failed\r\n");
 	}
+
 	Spider.SetSpeed(50);
+	
+	
+	//put in to make robot immediately fold while working on ir sensor
+	Spider.Fold();
 
 	// 
 	printf("Create Bluetooth Thread\r\n");

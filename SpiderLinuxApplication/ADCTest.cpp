@@ -8,27 +8,29 @@ int main(int argc, char *argv[]){
 
 	printf("===== Spider ADC Test =====\r\n");
 
-	uint32_t sensorReading0 = 0;
+//	uint32_t sensorReading0 = 0;
   uint32_t sensorReading1 = 0;
+/*
   uint32_t sensorReading2 = 0;
   uint32_t sensorReading3 = 0;
   uint32_t sensorReading4 = 0;
   uint32_t sensorReading5 = 0;
   uint32_t sensorReading6 = 0;
   uint32_t sensorReading7 = 0;
-
+*/
 	while(1)
 	{
+/*		
 		sensorReading0 = adc.GetChannel(0);
 		printf("Ch0 Sensor Reading: %u\r\n", sensorReading0);
     // std::bitset<32> sensorReadingBinary0(sensorReading0);
     // std::cout << "Register0: " << sensorReadingBinary0 << "\n";
-
+*/
 		sensorReading1 = adc.GetChannel(1);
 		printf("Ch1 Sensor Reading: %u\r\n", sensorReading1);
     // std::bitset<32> sensorReadingBinary1(sensorReading1);
     // std::cout << "Register1: " << sensorReadingBinary1 << "\n";
-
+/*
 		sensorReading2 = adc.GetChannel(2);
 		printf("Ch2 Sensor Reading: %u\r\n", sensorReading2);
     // std::bitset<32> sensorReadingBinary2(sensorReading2);
@@ -58,7 +60,7 @@ int main(int argc, char *argv[]){
 		printf("Ch7 Sensor Reading: %u\r\n", sensorReading7);
     // std::bitset<32> sensorReadingBinary7(sensorReading7);
     // std::cout << "Register7: " << sensorReadingBinary7 << "\n";
-
+*/
     printf("\r\n");
     printf("\r\n");
 

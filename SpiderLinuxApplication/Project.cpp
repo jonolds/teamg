@@ -15,7 +15,7 @@
 
 int main(int argc, char *argv[]){
 
-  printf("===== Group <X> Final Project =====\r\n");
+
 
   //####################################
   /*
@@ -24,10 +24,7 @@ int main(int argc, char *argv[]){
   */
   //####################################
 
-  // Spider class
-
-  CSpider Spider;
-
+	/*
 	printf("Spider Init & Standup\r\n");
 	if (!Spider.Init()){
 		printf("Spilder Init failed\r\n");
@@ -38,7 +35,12 @@ int main(int argc, char *argv[]){
 	Spider.SetSpeed(50);
 
   //####################################
-
+  */
+  
+  printf("===== Group <G> Final Project =====\r\n");
+  CSpider Spider;
+  Spider.Fold();
+	
   // Uncomment to use the ADC class for reading IR sensor
    ADC adc;
 
