@@ -13,6 +13,8 @@
 #include "PIO_BUTTON.h"
 #include "ADC.h"
 
+
+int distance;
 int main(int argc, char *argv[]){
 
 
@@ -43,6 +45,9 @@ int main(int argc, char *argv[]){
 	
   // Uncomment to use the ADC class for reading IR sensor
    ADC adc;
+   
+   distance = adc.GetChannel(1);
+ 
 
 
 	return 0;
