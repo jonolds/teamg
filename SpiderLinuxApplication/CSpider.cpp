@@ -3,8 +3,6 @@
 #include <stdio.h>
 #include "CSpider.h"
 //#include <Math.h>
-
-
 #define HipF_Base 	   -20
 #define HipM_Base  		0
 #define HipB_Base  		20
@@ -53,25 +51,6 @@ CSpider::CSpider():
 	}
 }
 
-CSpider::CSpider(float Fold):
-	m_bAbort(false)
-{
-		// TODO Auto-generated constructor stub
-	int i;
-	int szMotorID[] = {
-	 /* LEG_RF */ 0,  1,  2,
-	 /* LEG_RM */ 3,  4,  5,
-	 /* LEG_RB */ 6,  7,  8,
-	 /* LEG_LF */ 9,  10, 11,
-	 /* LEG_LM */ 12, 13, 14,
-	 /* LEG_LB */ 15, 16, 17
-	};
-
-	for(i=0;i<LEG_NUM;i++){
-		m_szLeg[i] = new CSpiderLeg(szMotorID[i*3], szMotorID[i*3+1], szMotorID[i*3+2]);
-	}
-}
-
 CSpider::~CSpider()
 {
 	// TODO Auto-generated destructor stub
@@ -80,7 +59,6 @@ CSpider::~CSpider()
 		delete m_szLeg[i];
 	}
 }
-
 void CSpider::Sleep(void)
 {
 	int i;
@@ -88,7 +66,6 @@ void CSpider::Sleep(void)
 		   m_szLeg[i]->Sleep();
 		} // for i
 }
-
 void CSpider::WakeUp(void)
 {
 	int i;
@@ -99,6 +76,8 @@ void CSpider::WakeUp(void)
 		   while(OS_GetTickCount() < Start_Time){}
 		} // for i
 }
+
+
 
 bool CSpider::Init(void)
 {
@@ -153,7 +132,7 @@ bool CSpider::WaitReady(uint32_t Timeout)
 	//	Timeout = alt_nticks() + (uint32_t)(fTimeoutSecond * (float)alt_ticks_per_second());
 	//	Timeout = OS_GetTickCount() + (uint32_t)(fTimeoutSecond * (float)OS_TicksPerSecond());
 
-	Timeout = OS_GetTickCount() + (Timeout *3);
+	Timeout = OS_GetTickCount() + (Timeout * 3);
 	while(!bReady){
 		bReady = IsReady();
 		if (!bReady && (OS_GetTickCount() > Timeout))
@@ -177,6 +156,9 @@ bool CSpider::IsReady(void)
 	}
 	return bReady;
 }
+
+
+
 
 void CSpider::MoveForward(uint8_t Repeat_Num)
 {
@@ -255,6 +237,10 @@ void CSpider::RotatelRight(uint8_t Repeat_Num)
 	m_bAbort = false;
 
 }
+
+
+
+
 
 void CSpider::RotatelLeft(uint8_t Repeat_Num)
 {
@@ -335,6 +321,8 @@ void CSpider::MoveParallelR(uint8_t Repeat_Num)
 	}
 }
 
+
+
 void CSpider::BodyUpDown(uint8_t Repeat_Num)
 {
 	if (m_bDebugDump)
@@ -404,6 +392,17 @@ void CSpider::BodyNone()
 	m_szLeg[LEG_LB]->MoveJoint(CSpiderLeg::Hip,HipB_Base);
 	WaitReady(ReadyTime());
 }
+
+
+
+
+
+
+
+
+
+
+
 
 void CSpider::BodyBackward()
 {
@@ -484,6 +483,7 @@ void CSpider::TiltBackward()
 	WaitReady(ReadyTime());
 }
 
+
 void CSpider::MoveTripod(TRIPOD_ID Tripod,CSpiderLeg::JOINT_ID Joint,float AngleF,float AngleM,float AngleB)
 {
 	if(Tripod == 0)
@@ -562,6 +562,8 @@ bool CSpider::Standup(void)
 	return bSuccess;
 
 }
+
+
 
 void CSpider::Reset(void)
 {
@@ -705,6 +707,26 @@ void CSpider::DEMO_Rollover(void)
 	Reset();
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 void CSpider::DEMO_Dance(uint8_t Repeat_Num)
 {
 	if (m_bDebugDump)
@@ -775,6 +797,16 @@ void CSpider::SetLegsBase()
 	}
 	WaitReady(ReadyTime());
 }
+
+
+
+
+
+
+
+
+
+
 
 void CSpider::Extend()
 {

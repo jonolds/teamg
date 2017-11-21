@@ -77,7 +77,6 @@ bool CMMap::map(uint32_t addr_base, uint32_t addr_span, uint32_t addr_mask){
 			
 		}
 	}
-		
 	return bSuccess;
 }
 

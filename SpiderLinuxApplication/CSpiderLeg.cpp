@@ -69,6 +69,16 @@ bool CSpiderLeg::IsReady(void){
 	return bReady;
 }
 
+
+
+
+
+
+
+
+
+
+
 uint32_t CSpiderLeg::ReadyTime(void){
 	uint32_t TotalReadyTime = 0, ReadyTime;
 	int i;

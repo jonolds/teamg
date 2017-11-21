@@ -13,7 +13,6 @@
 #include "PIO_BUTTON.h"
 #include <time.h>
 
-
 typedef enum{
 	CMD_AT,
 	CMD_FORDWARD,
@@ -34,7 +33,6 @@ typedef enum{
 	CMD_ALL,
 	CMD_IDLE,
 }COMMAND_ID;
-
 
 static void *bluetooth_spp_thread(void *ptr)
 {
@@ -99,7 +97,7 @@ int main(int argc, char *argv[]){
 	
 	
 	//put in to make robot immediately fold while working on ir sensor
-	Spider.Fold();
+	//Spider.Fold();
 
 	// 
 	printf("Create Bluetooth Thread\r\n");
@@ -218,10 +216,6 @@ int main(int argc, char *argv[]){
 				LastActionTime = OS_GetTickCount();
 			    //printf("rx:%xh\r\n", Data8);
 			}
-
 		}
-
-
-
 	return 0;
 }	
