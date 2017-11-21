@@ -1,26 +1,13 @@
-/*
- * BtSppCommand.cpp
- *
- *  Created on: 2014/9/12
- *      Author: Richard
- */
-
 #include "terasic_os.h"
 #include "BtSppCommand.h"
-
 #define ACTION_START		0x30
 #define ACTION_STOP			0x35
-
 #define ACTION_FORDWARD		'8' //0x38
 #define ACTION_BACKWARD		'2' //0x32
 #define ACTION_TRUN_RIGHT	'6' //0x36
 #define ACTION_TRUN_LEFT	'4' //0x34
 #define ACTION_SPEED_UP		'+' //0x2b
 #define ACTION_SPEED_DOWN	'-' //0x2d
-
-
-
-
 
 typedef struct{
 	char szCommand[8];
@@ -89,15 +76,10 @@ int CBtSppCommand::CommandPolling(int *pParam){
 		if (CommandParsing(szData, &ThisCommand, &ThisParam)){
 			Command = ThisCommand;
 			*pParam = ThisParam;
-
 		}
-
 	}	// if
-
 	return Command;
-
 }
-
 
 bool CBtSppCommand::CommandParsing(char *pCommand, int *pCommandID, int *pParam){
 	bool bFind = false;
@@ -118,15 +100,11 @@ bool CBtSppCommand::CommandParsing(char *pCommand, int *pCommandID, int *pParam)
 				{
 				  *pParam = (pCommand[5]-0x30)*100 + (pCommand[6]-0x30)*10+ (pCommand[7]-0x30);
 				}
-
 			}
 			bFind = true;
 		} // if
-
 	} // for
-
 	return bFind;
-
 }
 
 bool CBtSppCommand::CommandRead(char *pBuffer, int nBufferSize, int *prx_lenmand){
@@ -138,7 +116,6 @@ bool CBtSppCommand::CommandRead(char *pBuffer, int nBufferSize, int *prx_lenmand
 
 	if (!CBtSpp::NoneBlockingRead((char *)&Data, sizeof(Data), &RxLen) || RxLen == 0)
 			return false;
-
 	*(pBuffer + 0) = Data;
 
 	// read until find '\r'
@@ -159,14 +136,7 @@ bool CBtSppCommand::CommandRead(char *pBuffer, int nBufferSize, int *prx_lenmand
 		}else{
 		}
 		usleep(10);
-
 	}
 	*prx_lenmand = Len;
-
-
 	return true;
-
-
 }
-
-
