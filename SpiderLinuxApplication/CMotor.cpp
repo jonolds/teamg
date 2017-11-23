@@ -1,10 +1,3 @@
-/*
- * CMotor.cpp
- *
- *  Created on: 2014/7/26
- *      Author: Richard
- */
-
 #include "terasic_os.h"
 #include "CMotor.h"
 #include <math.h>
@@ -19,28 +12,11 @@
 #define HW_REGS_SPAN ( 0x04000000 )
 #define HW_REGS_MASK ( HW_REGS_SPAN - 1 )
 
-
 const uint32_t szPWM_Base[] = {
-		PWM0_BASE,
-		PWM1_BASE,
-		PWM2_BASE,
-		PWM3_BASE,
-		PWM4_BASE,
-		PWM5_BASE,
-		PWM6_BASE,
-		PWM7_BASE,
-		PWM8_BASE,
-		PWM9_BASE,
-		PWM10_BASE,
-		PWM11_BASE,
-		PWM12_BASE,
-		PWM13_BASE,
-		PWM14_BASE,
-		PWM15_BASE,
-		PWM16_BASE,
-		PWM17_BASE
+	PWM0_BASE, PWM1_BASE, PWM2_BASE, PWM3_BASE, PWM4_BASE, PWM5_BASE,
+	PWM6_BASE, PWM7_BASE, PWM8_BASE, PWM9_BASE, PWM10_BASE, PWM11_BASE,
+	PWM12_BASE, PWM13_BASE, PWM14_BASE, PWM15_BASE, PWM16_BASE, PWM17_BASE
 };
-
 
 #define REG_TOTAL_DUR	0
 #define REG_HIGH_DUR	1
@@ -65,10 +41,7 @@ const uint32_t szPWM_Base[] = {
 CMMap* CMotor::m_mmap=NULL;
 int CMotor::m_MotorCnt=0;
 
-
-
 bool CMotor::m_bDebugDump = false;
-
 
 CMotor::CMotor(int MonotrID):
 	m_nMotorID(MonotrID),
@@ -88,7 +61,6 @@ CMotor::CMotor(int MonotrID):
 	m_mmap->Reg32_Write(szPWM_Base[m_nMotorID], REG_ADJ_SPEED, PWM_SPEED_MAX+PWM_SPEED_MIN);// PWM_SPEED_MAX+PWM_SPEED_MIN/2
 	m_mmap->Reg32_Write(szPWM_Base[m_nMotorID], REG_ABORT, 0);
 	m_mmap->Reg32_Write(szPWM_Base[m_nMotorID], REG_HIGH_DUR, 0x00);
-
 }
 
 CMotor::~CMotor() {
@@ -98,10 +70,7 @@ CMotor::~CMotor() {
 		delete m_mmap;
 		m_mmap = 0;
 	}
-
 }
-
-
 
 void CMotor::Sleep(void){
     m_mmap->Reg32_Write(szPWM_Base[m_nMotorID], REG_ABORT, 1);
@@ -136,13 +105,11 @@ void CMotor::Move(float fAngle) {
 	}
 	else
 	    m_fAngle =  fAngle;
-
 	/* motor spec
 	 * angle:    min_angle ~ 0 ~ max_angle
 	 * high dur: 0.5ms      1.5ms      2.5 ms
 	 * value:    min_pwm  ~  0 ~ max_pwm
 	 */
-
 	PWM = (uint32_t)((fAngle + m_fAngleCorrected - MIN_ANGLE)/(float)(MAX_ANGLE-MIN_ANGLE)*(float)(MAX_PWM - MIN_PWM)) + MIN_PWM;
 
 	if (m_bDebugDump)
@@ -167,13 +134,11 @@ uint32_t CMotor::ReadyTime(void){
 	return m_ReadyTime;
 }
 
-float CMotor::GetfAngle(void)
-{
+float CMotor::GetfAngle(void) {
 	return m_fAngle;
 }
 
-void CMotor::SetSpeed(int Speed)
-{
+void CMotor::SetSpeed(int Speed) {
 	if(Speed >SPEED_MAX)
 	  Speed = SPEED_MAX-1;
 	else if(Speed <SPEED_MIN)
@@ -189,5 +154,3 @@ uint32_t CMotor::GetSpeed(void)
 {
 	return m_Speed;
 }
-
-

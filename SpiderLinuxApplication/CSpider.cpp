@@ -29,7 +29,7 @@
 #define Ankle_Full_Grab  	  -15
 
 
-bool CSpider::m_bDebugDump = false;
+bool CSpider::m_bDebugDump = true;
 
 
 CSpider::CSpider():

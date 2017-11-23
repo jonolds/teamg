@@ -14,16 +14,7 @@ typedef struct{
 	int CommandId;
 	bool bParameter;
 }COMMAND_INFO;
-/*
-COMMAND_INFO gCommandList[] = {
-		{"AT\r", CBtSppCommand::CMD_AT, true},
-		{"ATFW\r", CBtSppCommand::CMD_FORDWARD, false},
-		{"ATBW\r", CBtSppCommand::CMD_BACKWARD, false},
-		{"ATTR\r", CBtSppCommand::CMD_TURN_RIHGT, false},
-		{"ATTL\r", CBtSppCommand::CMD_TURN_LEFT, false},
-		{"ATST\r", CBtSppCommand::CMD_STOP, false},
-		{"ATSP=", CBtSppCommand::CMD_SPPED, true},
-};*/
+
 COMMAND_INFO gCommandList[] = {
 		{"AT\r", CBtSppCommand::CMD_AT, true},
 		{"ATFW\r", CBtSppCommand::CMD_FORDWARD, false},

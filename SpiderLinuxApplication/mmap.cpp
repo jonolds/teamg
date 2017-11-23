@@ -15,7 +15,6 @@
 #define H2F_LW_REGS_SPAN ( 0x04000000 )
 #define H2F_LW_REGS_MASK ( H2F_LW_REGS_SPAN - 1 )
 
-
 CMMap::CMMap(int MapID):
 	m_fd(-1),
 	m_virtual_base(MAP_FAILED)
@@ -28,14 +27,11 @@ CMMap::CMMap(int MapID):
 		}
 }
 
-
 CMMap::~CMMap(){
 	unmap();
-
 }
 
-bool CMMap::CheckQsysID(void){
-
+bool CMMap::CheckQsysID(void) {
 	bool bSuccess = false;
 	uint32_t Version;
 	printf("[CMMap]CheckQsysID\r\n");
@@ -50,12 +46,10 @@ bool CMMap::CheckQsysID(void){
 	return bSuccess;
 }
 
-bool CMMap::map(uint32_t addr_base, uint32_t addr_span, uint32_t addr_mask){
-	
+bool CMMap::map(uint32_t addr_base, uint32_t addr_span, uint32_t addr_mask) {
 	bool bSuccess = false;
 	int fd;
 	void *virtual_base;
-	
 	m_addr_base = addr_base;
 	m_addr_span = addr_span;
 	m_addr_mask = addr_mask;	
@@ -79,6 +73,13 @@ bool CMMap::map(uint32_t addr_base, uint32_t addr_span, uint32_t addr_mask){
 	}
 	return bSuccess;
 }
+
+
+
+
+
+
+
 
 
 void CMMap::unmap(){

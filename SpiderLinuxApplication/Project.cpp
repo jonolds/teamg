@@ -14,7 +14,6 @@
 #include "PIO_BUTTON.h"
 #include "ADC.h"
 #include "mmap.h"
-
 using namespace std;
 
 typedef enum{
@@ -76,9 +75,9 @@ static void *bluetooth_spp_thread(void *ptr)
 	return 0;
 }
 
-void Dodge(CSpider Spider) {
+
+void Dodge(CSpider Spider, ADC adc) {
 	int walked = 0;
-	ADC adc;
 	bool alt = true;
 	bool blocked = false;
 	
@@ -100,13 +99,14 @@ void Dodge(CSpider Spider) {
 				if(distance < 700)
 					blocked = false;
 			}	
-			alt = !alt;
 		}
 	}
+	Spider.Reset();
 }
 
+
 int main(int argc, char *argv[]) {
-	
+	ADC adc;
 	CSpider Spider;
     CQueueCommand QueueCommand;
     int Command, Param;
@@ -137,24 +137,57 @@ int main(int argc, char *argv[]) {
 	*/
 	
 	printf("\r\n");
-	printf("===== Spider Controller =====\r\n");
 	printf("Manual Spider Control\r\n");
 	printf("Commands:\r\n");
 	printf("\tCommand the spider to perform specific action:\r\n");
 	printf("\t\tActions: reset, fold, extend, dodge  \r\n");
 	printf("\t\t-------dodge walks forward until sensor goes above 700 then moves to the side\r\n");
 	printf("\t\tforward, back, right, left\r\n");
+	printf("\t\tspeed10, speed30, speed50\r\n");
 	printf("\r\n");
 
 	string command = "";
 	printf("SpiderController# ");
 	cin >> command;
 	printf("\r\n");
-
 	while(command != "exit") {
-
+		if(stringContains(command, "dodge")) {
+			printf("\tStarting Dodge Sequence...");
+			
+			//*******Kept getting seg fault, maybe the result of running in separate function??
+			//*******Trying this block within the main func next time
+			//*******Also need to try adding & in func parameters - probably the issue
+			int walked = 0;
+			bool alt = true;
+			bool blocked = false;
+			
+			while(walked < 8) {
+				int distance = adc.GetChannel(1);
+				printf("%d\r\n", distance);
+				if(distance < 700) {
+					Spider.MoveForward(1);
+					walked ++;
+				}
+				else {
+					blocked = true;
+					while(blocked) {
+						if(alt == true)
+							Spider.MoveParallelR(3);
+						else
+							Spider.MoveParallelL(3);
+						distance = adc.GetChannel(1);
+						if(distance < 700)
+							blocked = false;
+					}	
+				}
+			}
+			//****End attempt
+			
+			//Dodge(Spider, adc);
+			printf("DONE\r\n");				
+		}
 		// Reset - sets the legs to base position
-		if(stringContains(command, "reset")) {
+		else if(stringContains(command, "reset")) {
 			printf("\tResetting legs...");
 			Spider.SetLegsBase();
 			printf("DONE\r\n");
@@ -191,9 +224,19 @@ int main(int argc, char *argv[]) {
 			Spider.MoveParallelL(8);
 			printf("DONE\r\n");
 		}
-		else if(stringContains(command, "dodge")) {
-			printf("\tStarting Dodge Sequence...");
-			Dodge(Spider);
+		else if(stringContains(command, "speed10")) {
+			printf("\tSetting Spider speed to 10...");
+			Spider.SetSpeed(10);
+			printf("DONE\r\n");				
+		}
+		else if(stringContains(command, "speed30")) {
+			printf("\tSetting Spider speed to 30...");
+			Spider.SetSpeed(30);
+			printf("DONE\r\n");				
+		}
+		else if(stringContains(command, "speed50")) {
+			printf("\tSetting Spider speed to 50...");
+			Spider.SetSpeed(50);
 			printf("DONE\r\n");				
 		}
 		// Invalid
