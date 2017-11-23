@@ -75,8 +75,9 @@ static void *bluetooth_spp_thread(void *ptr)
 	return 0;
 }
 
-
-void Dodge(CSpider Spider, ADC adc) {
+//*****************Try this next time
+//void Dodge(CSpider Spider, ADC adc) {
+void Dodge(CSpider &Spider, ADC &adc) {
 	int walked = 0;
 	bool alt = true;
 	bool blocked = false;
@@ -154,9 +155,14 @@ int main(int argc, char *argv[]) {
 		if(stringContains(command, "dodge")) {
 			printf("\tStarting Dodge Sequence...");
 			
-			//*******Kept getting seg fault, maybe the result of running in separate function??
-			//*******Trying this block within the main func next time
-			//*******Also need to try adding & in func parameters - probably the issue
+			// ****Kept getting seg fault after running Dodge more than once 
+			// ****Maybe because of separate funct, maybe needed to pass by ref (my best guess)
+			// ****First and Second possible fixes below. Third possible fix is move function to CSpider
+			
+			// ****Try First (updated function to pass by reference)
+			Dodge(Spider, adc);
+			
+			/* // ****Try second
 			int walked = 0;
 			bool alt = true;
 			bool blocked = false;
@@ -181,9 +187,9 @@ int main(int argc, char *argv[]) {
 					}	
 				}
 			}
-			//****End attempt
+			*/// ****End second possible fix
+
 			
-			//Dodge(Spider, adc);
 			printf("DONE\r\n");				
 		}
 		// Reset - sets the legs to base position
