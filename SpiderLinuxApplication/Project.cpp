@@ -17,7 +17,26 @@
 
 using namespace std;
 
-
+typedef enum{
+	CMD_AT,
+	CMD_FORDWARD,
+	CMD_BACKWARD,
+	CMD_TURN_RIHGT,
+	CMD_TURN_LEFT,
+	CMD_TURN_RIHGT_DGREE,
+	CMD_TURN_LEFT_DGREE,
+	CMD_STOP,
+	CMD_SPPED,
+	CMD_TILTL,
+	CMD_TILTR,
+	CMD_TILTF,
+	CMD_TILTB,
+	CMD_TILTN,
+	CMD_Query_Version,
+	CMD_JOYSTICK,
+	CMD_ALL,
+	CMD_IDLE,
+}COMMAND_ID;
 
 bool stringContains(string str, string subStr) {
 	if(str.find(subStr) != string::npos)
@@ -26,150 +45,166 @@ bool stringContains(string str, string subStr) {
 		return false;
 }
 
-int main(int argc, char *argv[]) {
-	ADC adc;
-	int distance = 0;
-	CSpider Spider;
-					Spider.SetSpeed(50);
-				printf("Spider Init & Standup\r\n");
-				if (!Spider.Init()){
-					printf("Spider Init failed\r\n");
+static void *bluetooth_spp_thread(void *ptr)
+{
+	CBtSppCommand BtSppCommand;
+	CQueueCommand *pQueueCommand;
+	int Command, Param;
+	pQueueCommand = (CQueueCommand *)ptr;
+	printf("[BT]Start Service\r\n");
+	BtSppCommand.RegisterService();
+	while(1){
+		printf("[BT]Listen...\r\n");
+		BtSppCommand.RfcommOpen();
+		printf("[BT]Connected...\r\n");
+		while(1){
+			Command = BtSppCommand.CommandPolling(&Param);
+			if (Command != CMD_IDLE){
+				// push command to command queue
+				if (Command == CMD_STOP)
+				   pQueueCommand->Clear();
+				// push command to command queue 
+				if (!pQueueCommand->IsFull()){
+				   pQueueCommand->Push(Command, Param);
 				}
-				else{
-					if (!Spider.Standup())
-						printf("Spider Standup failed\r\n");
-				}
-	//Spider.Fold();
+			}
+		}
+		printf("[BT]Disconneected...\r\n");
+		BtSppCommand.RfcommClose();
+	}
+//	pthread_exit(0); /* exit */
+	return 0;
+}
 
+void Dodge(CSpider Spider) {
+	int walked = 0;
+	ADC adc;
+	bool alt = true;
+	bool blocked = false;
+	
+	while(walked < 8) {
+		int distance = adc.GetChannel(1);
+		printf("%d\r\n", distance);
+		if(distance < 700) {
+			Spider.MoveForward(1);
+			walked ++;
+		}
+		else {
+			blocked = true;
+			while(blocked) {
+				if(alt == true)
+					Spider.MoveParallelR(3);
+				else
+					Spider.MoveParallelL(3);
+				distance = adc.GetChannel(1);
+				if(distance < 700)
+					blocked = false;
+			}	
+			alt = !alt;
+		}
+	}
+}
+
+int main(int argc, char *argv[]) {
+	
+	CSpider Spider;
+    CQueueCommand QueueCommand;
+    int Command, Param;
+    bool bSleep = false;
+    CPIO_LED LED_PIO;
+    CPIO_BUTTON BUTTON_PIO;
+    pthread_t id0;
+    int ret0;
+    uint32_t LastActionTime;
+    const uint32_t MaxIdleTime = 10*60*OS_TicksPerSecond(); // spider go to sleep when exceed this time
+	
+	Spider.SetSpeed(50);
+	printf("Spider Init & Standup\r\n");
+	if (!Spider.Init()){
+		printf("Spider Init failed\r\n");
+	}
+	else{
+		if (!Spider.Standup())
+			printf("Spider Standup failed\r\n");
+	}
+	
+	/*
+	ret0=pthread_create(&id0,NULL,bluetooth_spp_thread, (void *)&QueueCommand);
+	if(ret0!=0){
+		printf("Creat pthread-0 error!\n");
+		//exit(1);	
+	}
+	*/
+	
 	printf("\r\n");
 	printf("===== Spider Controller =====\r\n");
 	printf("Manual Spider Control\r\n");
-
 	printf("Commands:\r\n");
 	printf("\tCommand the spider to perform specific action:\r\n");
-	printf("\tspider <action>\r\n");
-	printf("\t\tActions: reset, fold, extend, grab\r\n");
-	printf("\tSet a specific joint:\r\n");
-	printf("\tset <joint> <leg> <position>\r\n");
-	printf("\t\tJoints: hip, knee, ankle\r\n");
-	printf("\t\tLegs: RF=0, RM=1, RB=2, LF=3, LM=4, LB=5\r\n");
-	printf("\t\tPosition: Must be within the range (-90, 90)\r\n");
+	printf("\t\tActions: reset, fold, extend, dodge  \r\n");
+	printf("\t\t-------dodge walks forward until sensor goes above 700 then moves to the side\r\n");
+	printf("\t\tforward, back, right, left\r\n");
 	printf("\r\n");
 
 	string command = "";
-	int leg = 0; // Must be 0 to 5
-	int joint = 0; // Hip = 0, Knee = 1, Ankle = 2
-	int jointDegrees = 0; // Must be -90 to 90
-
 	printf("SpiderController# ");
 	cin >> command;
 	printf("\r\n");
 
 	while(command != "exit") {
 
-		distance = adc.GetChannel(1);
-		printf("Ch1 Sensor Reading: %u\r\n", distance);
-		while(distance >1500) {
-			distance = adc.GetChannel(1);
+		// Reset - sets the legs to base position
+		if(stringContains(command, "reset")) {
+			printf("\tResetting legs...");
+			Spider.SetLegsBase();
+			printf("DONE\r\n");
 		}
-		Spider.MoveForward(4);
-	
-		if(stringContains(command, "spider")) {
-			
-			// Get spider action
-			cin >> command;
-			// Reset - sets the legs to base position
-			if(stringContains(command, "reset")) {
-				printf("\tResetting legs...");
-				Spider.SetLegsBase();
-				printf("DONE\r\n");
-			}
-			// Extend - extends knees and ankles
-			else if(stringContains(command, "extend")) {
-				printf("\tExtending legs...");
-				Spider.Extend();
-				printf("DONE\r\n");
-			}
-			// Fold - Compactly folds legs for easy storage
-			else if(stringContains(command, "fold")) {
-				printf("\tFolding legs...");
-				Spider.Fold();
-				printf("DONE\r\n");
-			}
-			// Grab - Bring together fingertips
-			else if(stringContains(command, "grab")) {
-				printf("\tGrabbing with legs...");
-				Spider.Grab();
-				printf("DONE\r\n");
-			}
-			else if(stringContains(command, "forward")) {
-				printf("\tFordward...");
-				Spider.MoveForward(4);
-				printf("DONE\r\n");
-			}
-			else if(stringContains(command, "back")) {
-				printf("\tBack...");
-				Spider.MoveBackward(4);
-				printf("DONE\r\n");
-			}
-			else if(stringContains(command, "right")) {
-				printf("\tRight...");
-				Spider.MoveParallelR(8);
-				printf("DONE\r\n");
-			}
-			else if(stringContains(command, "left")) {
-				printf("\tLeft...");
-				Spider.MoveParallelL(8);
-				printf("DONE\r\n");
-			}
-			else if(stringContains(command, "init")) {
-
-			}
-			// Invalid
-			else
-				printf("ERROR - Invalid spider command: %s\r\n", command.c_str()); 
+		// Extend - extends knees and ankles
+		else if(stringContains(command, "extend")) {
+			printf("\tExtending legs...");
+			Spider.Extend();
+			printf("DONE\r\n");
 		}
-
-		// Single joint commands
-		else if(stringContains(command, "set")) {
-			
-			// Expecting joint (hip, knee, or ankle)
-			cin >> command;
-			if(stringContains(command, "hip"))
-				joint = 0;
-			else if(stringContains(command, "knee"))
-				joint = 1;
-			else if(stringContains(command, "ankle"))
-				joint = 2;
-
-
-			// Expecting leg ID
-			cin >> command;
-			leg = atoi(command.c_str());
-			if(leg >= 0 && leg <= 5) {
-				
-				// Expecting degrees (-90 to 90)
-				cin >> command;
-				jointDegrees = atoi(command.c_str());
-				if(jointDegrees >= -90 && jointDegrees <= 90) {
-					printf("\tSetting leg %i, joint %i to position %i...", leg, joint, jointDegrees);
-					Spider.SetJointPosition(leg, joint, jointDegrees);
-					printf("DONE\r\n");
-				}
-				else
-					printf("ERROR - Invalid joint position: %i\r\n", jointDegrees);
-			}
-			else{ printf("ERROR - Invalid leg: %i\r\n", leg); }
+		// Fold - Compactly folds legs for easy storage
+		else if(stringContains(command, "fold")) {
+			printf("\tFolding legs...");
+			Spider.Fold();
+			printf("DONE\r\n");
 		}
-
-		// Get the next command
-		if(command != "exit")
-			printf("SpiderController# ");
+		else if(stringContains(command, "forward")) {
+			printf("\tFordward...");
+			Spider.MoveForward(4);
+			printf("DONE\r\n");
+		}
+		else if(stringContains(command, "back")) {
+			printf("\tBack...");
+			Spider.MoveBackward(4);
+			printf("DONE\r\n");
+		}
+		else if(stringContains(command, "right")) {
+			printf("\tRight...");
+			Spider.MoveParallelR(8);
+			printf("DONE\r\n");
+		}
+		else if(stringContains(command, "left")) {
+			printf("\tLeft...");
+			Spider.MoveParallelL(8);
+			printf("DONE\r\n");
+		}
+		else if(stringContains(command, "dodge")) {
+			printf("\tStarting Dodge Sequence...");
+			Dodge(Spider);
+			printf("DONE\r\n");				
+		}
+		// Invalid
+		else
+			printf("ERROR - Invalid spider command: %s\r\n", command.c_str()); 
 		
+		// Get the next command
+		printf("SpiderController# ");
 		cin >> command;
 		if(command != "exit")
 			printf("\r\n");
 	}
-
 	return 0;
 }

@@ -15,7 +15,6 @@ CBtSpp::CBtSpp():
 	m_client(0),
 	m_sdp_session(NULL)
 	{
-
 }
 
 CBtSpp::~CBtSpp() {
@@ -23,7 +22,6 @@ CBtSpp::~CBtSpp() {
 	RfcommClose();
 	UnregisterService();
 }
-
 
 void CBtSpp::RegisterService(void){
     uint8_t svc_uuid_int[] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
@@ -109,9 +107,6 @@ void CBtSpp::RegisterService(void){
     sdp_list_free( profile_list, 0 );
 
     m_sdp_session = session;
-
-
-    
 }
 
 void CBtSpp::UnregisterService(void){

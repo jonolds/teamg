@@ -13,6 +13,7 @@
 #include "PIO_BUTTON.h"
 #include <time.h>
 
+
 typedef enum{
 	CMD_AT,
 	CMD_FORDWARD,
@@ -36,7 +37,6 @@ typedef enum{
 
 static void *bluetooth_spp_thread(void *ptr)
 {
-
 	CBtSppCommand BtSppCommand;
 	CQueueCommand *pQueueCommand;
 	int Command, Param;
@@ -56,16 +56,12 @@ static void *bluetooth_spp_thread(void *ptr)
 				// push command to command queue 
 				if (!pQueueCommand->IsFull()){
 				   pQueueCommand->Push(Command, Param);
-				    }
-				/*if (!pQueueCommand->IsFull()){
-					pQueueCommand->Push(Command, Param);
-				}*/
+				}
 			}
 		}
 		printf("[BT]Disconneected...\r\n");
 		BtSppCommand.RfcommClose();
 	}
-
 //	pthread_exit(0); /* exit */
 	return 0;
 }
@@ -82,9 +78,8 @@ int main(int argc, char *argv[]){
     int ret0;
     uint32_t LastActionTime;
     const uint32_t MaxIdleTime = 10*60*OS_TicksPerSecond(); // spider go to sleep when exceed this time
-//    const uint32_t MaxIdleTime = 10*60*OS_TicksPerSecond(); // spider go to sleep when exceed this time
 
-
+	printf("===== Spider Demo =====\r\n"); 
 	printf("Spider Init & Standup\r\n");
 	if (!Spider.Init()){
 		printf("Spilder Init failed\r\n");
@@ -92,12 +87,7 @@ int main(int argc, char *argv[]){
 		if (!Spider.Standup())
 			printf("Spilder Standup failed\r\n");
 	}
-
 	Spider.SetSpeed(50);
-	
-	
-	//put in to make robot immediately fold while working on ir sensor
-	//Spider.Fold();
 
 	// 
 	printf("Create Bluetooth Thread\r\n");
@@ -216,6 +206,10 @@ int main(int argc, char *argv[]){
 				LastActionTime = OS_GetTickCount();
 			    //printf("rx:%xh\r\n", Data8);
 			}
+
 		}
+
+
+
 	return 0;
 }	
