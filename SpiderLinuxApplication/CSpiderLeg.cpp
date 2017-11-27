@@ -1,8 +1,5 @@
 /*
  * CSpiderLeg.cpp
- *
- *  Created on: 2014/7/26
- *      Author: Richard
  */
 
 #include "terasic_os.h"

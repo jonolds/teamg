@@ -1,13 +1,6 @@
-/*
- * CSpider.h
- *
- *  Created on: 2014/7/26
- *      Author: Richard
- */
-
+// CSpider.h
 #ifndef CSPIDER_H_
 #define CSPIDER_H_
-
 #include "CSpiderLeg.h"
 
 class CSpider {
@@ -32,7 +25,6 @@ protected:
 	CSpiderLeg *m_szLeg[LEG_NUM];
 	static bool m_bDebugDump;
 	bool m_bAbort;
-
 
 public:
 	CSpider();
@@ -64,7 +56,9 @@ public:
 	void MoveParallelL(uint8_t Repeat_Num);
 	void Stomp(uint8_t Repeat_Num);
 	void RotatelRight(uint8_t Repeat_Num);
+	void RotatelRight2(uint8_t Repeat_Num);
 	void RotatelLeft(uint8_t Repeat_Num);
+	void RotatelLeft2(uint8_t Repeat_Num);
 	void SetSpeed(int Speed);
 	void DEMO_Dance(uint8_t Repeat_Num);
 	void ByeBye(uint8_t Repeat_Num);
@@ -72,15 +66,12 @@ public:
 	void Abort(void);
 	void Sleep(void);
 	void WakeUp(void);
-
+	void GetAllAngles();
 	void SetLegsBase();
 	void Extend();
 	void Fold();
 	void Grab();
 
 	void SetJointPosition(int leg, int joint, int position);
-
-
 };
-
 #endif /* CSPIDER_H_ */

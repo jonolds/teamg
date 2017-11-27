@@ -1,8 +1,5 @@
 /*
  * CSpiderLeg.h
- *
- *  Created on: 2014/7/26
- *      Author: Richard
  */
 
 #ifndef CSPIDERLEG_H_

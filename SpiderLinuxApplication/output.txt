@@ -1,0 +1,54 @@
+reset output:
+
+LEG_RF: 20 -45 -45
+LEG_RM: -0 -45 -45
+LEG_RB: -20 -45 -45
+LEG_LB: 20 45 45
+LEG_LM: 0 45 45
+LEG_LF: -20 45 45
+
+back 1 output:
+
+//raise tripod 1 legs by changing knee from +- 45 to +-60
+LEG_RF: 20 -60 -45
+LEG_RM: -0 -45 -45
+LEG_RB: -20 -60 -45
+LEG_LB: 20 45 45
+LEG_LM: 0 60 45
+LEG_LF: -20 45 45
+
+
+LEG_RF: 40 -60 -45
+LEG_RM: -20 -45 -45
+LEG_RB: -0 -60 -45
+LEG_LB: 40 45 45
+LEG_LM: -20 60 45
+LEG_LF: 0 45 45
+
+LEG_RF: 40 -45 -45
+LEG_RM: -20 -45 -45
+LEG_RB: -0 -45 -45
+LEG_LB: 40 45 45
+LEG_LM: -20 45 45
+LEG_LF: 0 45 45
+
+LEG_RF: 40 -45 -45
+LEG_RM: -20 -60 -45
+LEG_RB: -0 -45 -45
+LEG_LB: 40 60 45
+LEG_LM: -20 45 45
+LEG_LF: 0 60 45
+
+LEG_RF: -0 -45 -45
+LEG_RM: 20 -60 -45
+LEG_RB: -40 -45 -45
+LEG_LB: 0 60 45
+LEG_LM: 20 45 45
+LEG_LF: -40 60 45
+
+LEG_RF: -0 -45 -45
+LEG_RM: 20 -45 -45
+LEG_RB: -40 -45 -45
+LEG_LB: 0 45 45
+LEG_LM: 20 45 45
+LEG_LF: -40 45 45
