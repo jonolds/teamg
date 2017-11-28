@@ -1,0 +1,102 @@
+ECLIPSE ANDROID PROJECT IMPORT SUMMARY
+======================================
+
+Ignored Files:
+--------------
+The following files were *not* copied into the new Gradle project; you
+should evaluate whether these are still needed in your project and if
+so manually move them:
+
+* .idea\
+* .idea\misc.xml
+* .idea\workspace.xml
+* app\
+* app\build.gradle
+* app\src\
+* app\src\main\
+* app\src\main\AndroidManifest.xml
+* app\src\main\java\
+* app\src\main\java\www\
+* app\src\main\java\www\terasic\
+* app\src\main\java\www\terasic\com\
+* app\src\main\java\www\terasic\com\tw\
+* app\src\main\java\www\terasic\com\tw\SPIDER\
+* app\src\main\java\www\terasic\com\tw\SPIDER\BluetoothChat.java
+* app\src\main\java\www\terasic\com\tw\SPIDER\BluetoothChatService.java
+* app\src\main\java\www\terasic\com\tw\SPIDER\DeviceListActivity.java
+* app\src\main\java\www\terasic\com\tw\SPIDER\startdisplay.java
+* app\src\main\res\
+* app\src\main\res\drawable-mdpi\
+* app\src\main\res\drawable-mdpi\app_icon.9.png
+* app\src\main\res\drawable-mdpi\background.9.png
+* app\src\main\res\drawable-mdpi\brake.wav
+* app\src\main\res\drawable-mdpi\connect.9.png
+* app\src\main\res\drawable-mdpi\dance.9.png
+* app\src\main\res\drawable-mdpi\destop.9.png
+* app\src\main\res\drawable-mdpi\down.9.png
+* app\src\main\res\drawable-mdpi\gmod.9.png
+* app\src\main\res\drawable-mdpi\item_press_dance.xml
+* app\src\main\res\drawable-mdpi\item_press_down.xml
+* app\src\main\res\drawable-mdpi\item_press_left.xml
+* app\src\main\res\drawable-mdpi\item_press_reset.xml
+* app\src\main\res\drawable-mdpi\item_press_right.xml
+* app\src\main\res\drawable-mdpi\item_press_up.xml
+* app\src\main\res\drawable-mdpi\kmod.9.png
+* app\src\main\res\drawable-mdpi\left.9.png
+* app\src\main\res\drawable-mdpi\pressdance.9.png
+* app\src\main\res\drawable-mdpi\pressdown.9.png
+* app\src\main\res\drawable-mdpi\pressleft.9.png
+* app\src\main\res\drawable-mdpi\pressreset.9.png
+* app\src\main\res\drawable-mdpi\pressright.9.png
+* app\src\main\res\drawable-mdpi\pressup.9.png
+* app\src\main\res\drawable-mdpi\pressvoice.wav
+* app\src\main\res\drawable-mdpi\reset.9.png
+* app\src\main\res\drawable-mdpi\right.9.png
+* app\src\main\res\drawable-mdpi\startimage.9.png
+* app\src\main\res\drawable-mdpi\unconnect.9.png
+* app\src\main\res\drawable-mdpi\up.9.png
+* app\src\main\res\drawable-mdpi\vdemo.wav
+* app\src\main\res\layout\
+* app\src\main\res\layout\custom_title.xml
+* app\src\main\res\layout\device_list.xml
+* app\src\main\res\layout\device_name.xml
+* app\src\main\res\layout\main.xml
+* app\src\main\res\layout\message.xml
+* app\src\main\res\layout\startdisplay.xml
+* app\src\main\res\menu\
+* app\src\main\res\menu\option_menu.xml
+* app\src\main\res\values\
+* app\src\main\res\values\strings.xml
+* build.gradle
+* gradle\
+* gradle\wrapper\
+* gradle\wrapper\gradle-wrapper.jar
+* gradle\wrapper\gradle-wrapper.properties
+* gradlew
+* gradlew.bat
+* settings.gradle
+
+Moved Files:
+------------
+Android Gradle projects use a different directory structure than ADT
+Eclipse projects. Here's how the projects were restructured:
+
+* AndroidManifest.xml => app\src\main\AndroidManifest.xml
+* assets\ => app\src\main\assets
+* res\ => app\src\main\res\
+* src\ => app\src\main\java\
+
+Next Steps:
+-----------
+You can now build the project. The Gradle project needs network
+connectivity to download dependencies.
+
+Bugs:
+-----
+If for some reason your project does not build, and you determine that
+it is due to a bug or limitation of the Eclipse to Gradle importer,
+please file a bug at http://b.android.com with category
+Component-Tools.
+
+(This import summary is for your information only, and can be deleted
+after import once you are satisfied with the results.)

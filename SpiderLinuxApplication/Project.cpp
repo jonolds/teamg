@@ -95,27 +95,25 @@ void adcTest(uint8_t num, ADC &adc) {
 void Dodge(CSpider &Spider, ADC &adc) {
 	printf("\t[project]Starting Dodge Sequence...\r\n");
 	int walked = 0;
-	bool alt = true;
 	bool blocked = false;
 	
 	while(walked < 8) {
 		int distance = adc.GetChannel(1);
 		printf("%d\r\n", distance);
-		if(distance < 700) {
+		if(distance < 650) {
 			Spider.MoveForward(1);
 			walked ++;
 		}
 		else {
 			blocked = true;
 			while(blocked) {
-				if(alt == true)
-					Spider.MoveParallelR(3);
-				else
-					Spider.MoveParallelL(3);
-				distance = adc.GetChannel(1);
-				if(distance < 700)
+				Spider.MoveParallelR(1);
+				if(adc.GetChannel(1) < 550) {
+					Spider.MoveParallelR(5);
+					Spider.RotatelLeft2(1);
 					blocked = false;
-			}	
+				}
+			}
 		}
 	}
 	printf("\t[project]DONE\r\n");	
