@@ -1,4 +1,4 @@
-package www.terasic.com.tw.SPIDER;
+package terasic.spider.SPIDER;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -18,7 +18,7 @@ public class startdisplay extends Activity{
 	            public void run() {
 	                // TODO Auto-generated method stub
 	                try {
-	                    Thread.sleep(3000);//³oÃä¥i¥H°µ§A·Q¹w¥ý¸ü¤Jªº¸ê®Æ
+	                    Thread.sleep(3000);//ï¿½oï¿½ï¿½iï¿½Hï¿½ï¿½ï¿½Aï¿½Qï¿½wï¿½ï¿½ï¿½ï¿½ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½
 	                    startActivity(new Intent().setClass(startdisplay.this, BluetoothChat.class));
 	                    startdisplay.this.finish(); 
 	                } catch (InterruptedException e) {

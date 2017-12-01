@@ -5,7 +5,7 @@
  * should not be modified by hand.
  */
 
-package www.terasic.com.tw.SPIDER;
+package terasic.spider.SPIDER;
 
 public final class R {
     public static final class attr {

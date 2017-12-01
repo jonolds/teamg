@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package terasic.spider.SPIDER;
+package terasic.spider;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;

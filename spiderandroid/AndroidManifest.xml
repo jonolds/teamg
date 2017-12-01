@@ -14,7 +14,7 @@
      limitations under the License.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="www.terasic.com.tw.SPIDER"
+      package="terasic.spider.SPIDER"
       android:versionCode="1"
       android:versionName="1.0">
      <uses-sdk android:minSdkVersion="17" android:targetSdkVersion="21"/>
@@ -23,21 +23,21 @@
 
     <application android:label="@string/app_name"
                  android:icon="@drawable/app_icon" >
-        <activity android:name="www.terasic.com.tw.SPIDER.BluetoothChat"
+        <activity android:name="terasic.spider.SPIDER.BluetoothChat"
                   android:label="@string/app_name"
                   android:configChanges="orientation|keyboardHidden"
                   android:screenOrientation="portrait">
 
         </activity>
         
-        <activity android:name="www.terasic.com.tw.SPIDER.startdisplay" >
+        <activity android:name="terasic.spider.SPIDER.startdisplay" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         
-        <activity android:name="www.terasic.com.tw.SPIDER.DeviceListActivity"
+        <activity android:name="terasic.spider.SPIDER.DeviceListActivity"
                   android:label="@string/select_device"
                   android:theme="@android:style/Theme.Holo.Dialog"
                   android:configChanges="orientation|keyboardHidden" />

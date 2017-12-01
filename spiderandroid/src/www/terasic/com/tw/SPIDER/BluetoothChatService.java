@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package www.terasic.com.tw.SPIDER;
+package terasic.spider.SPIDER;
 
 import java.io.IOException;
 import java.io.InputStream;

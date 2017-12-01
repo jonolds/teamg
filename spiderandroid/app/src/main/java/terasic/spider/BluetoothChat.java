@@ -1,4 +1,4 @@
-package terasic.spider.SPIDER;
+package terasic.spider;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
@@ -56,6 +56,8 @@ public class BluetoothChat extends Activity implements SensorEventListener {
 	private ImageView UpMove;
 	private ImageView RightMove;
 	private ImageView LeftMove;
+	private ImageView RotL;
+	private ImageView RotR;
 	private ImageView ResetMove;
 	//Mode Switch
 	private ImageView ModeSwitch;
@@ -166,6 +168,8 @@ public class BluetoothChat extends Activity implements SensorEventListener {
 		RightMove = (ImageView) findViewById(R.id.imageViewright);
 		UpMove = (ImageView) findViewById(R.id.imageViewup);
 		ResetMove = (ImageView) findViewById(R.id.imageViewreset);
+		RotL = (ImageView) findViewById(R.id.imageViewRotL);
+		RotR = (ImageView) findViewById(R.id.imageViewRotR);
 		//Mode Switch
 		ModeSwitch = (ImageView) findViewById(R.id.imageViewMSwitch);
 		//Dance
@@ -285,6 +289,18 @@ public class BluetoothChat extends Activity implements SensorEventListener {
 				sendMessage("ATFW\r");
 			}
 		});
+		RotL = (ImageView) findViewById(R.id.imageViewRotL);
+		RotL.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				sendMessage("ATTTL\r");
+			}
+		});
+		RotR = (ImageView) findViewById(R.id.imageViewRotR);
+		RotR.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				sendMessage("ATTTR\r");
+			}
+		});
 		RightMove = (ImageView) findViewById(R.id.imageViewright);
 		RightMove.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
@@ -377,6 +393,7 @@ public class BluetoothChat extends Activity implements SensorEventListener {
 		if (message.length() > 0) {
 			// Get the message bytes and tell the BluetoothChatService to write
 			byte[] send = message.getBytes();
+			Log.e("BChat SendMessage(msg) ", message);
 			mChatService.write(send);
 			// Reset out string buffer to zero and clear the edit text field
 			mOutStringBuffer.setLength(0);

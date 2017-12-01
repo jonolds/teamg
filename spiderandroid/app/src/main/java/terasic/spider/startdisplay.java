@@ -1,4 +1,4 @@
-package terasic.spider.SPIDER;
+package terasic.spider;
 
 import android.app.Activity;
 import android.content.Intent;
