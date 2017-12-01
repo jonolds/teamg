@@ -1,22 +1,4 @@
-/*
- * Copyright (C) 2009 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-package www.terasic.com.tw.SPIDER;
-
-
+package terasic.spider.SPIDER;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
@@ -27,8 +9,6 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.media.AudioManager;
-import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -47,9 +27,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-/**
- * This is the main Activity that displays the current chat session.
- */
+//This is the main Activity that displays the current chat session.
 public class BluetoothChat extends Activity implements SensorEventListener {
 	// Message types sent from the BluetoothChatService Handler
 	public static final int MESSAGE_STATE_CHANGE = 1;
@@ -147,11 +125,6 @@ public class BluetoothChat extends Activity implements SensorEventListener {
 	private BluetoothAdapter mBluetoothAdapter = null;
 	// Member object for the chat services
 	private BluetoothChatService mChatService = null;
-	//play sound
-	private SoundPool soundPool;
-	private int vpress;
-	private int vbrake;
-	private int vdance;
 	// The action listener for the EditText widget, to listen for the return key
 	@SuppressLint("NewApi")
 	private TextView.OnEditorActionListener mWriteListener =
@@ -186,11 +159,7 @@ public class BluetoothChat extends Activity implements SensorEventListener {
 
 		// Set up the window layout
 		setContentView(R.layout.main);
-		//play music
-		soundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 5);
-		vpress = soundPool.load(this, R.drawable.pressvoice, 1);
-		vbrake = soundPool.load(this, R.drawable.brake, 1);
-		vdance = soundPool.load(this, R.drawable.vdemo, 1);
+
 		//Control Button
 		DownMove = (ImageView) findViewById(R.id.imageViewdown);
 		UpMove = (ImageView) findViewById(R.id.imageViewleft);
@@ -225,7 +194,6 @@ public class BluetoothChat extends Activity implements SensorEventListener {
 			@Override
 			public void onStopTrackingTouch(SeekBar seekBar) {
 				// TODO Auto-generated method stub
-
 				seekBarValue.setText("    Speed " + String.valueOf(Gprogress));
 				sendMessage("ATSP=" + Gprogress + "\r");
 			}
@@ -249,7 +217,6 @@ public class BluetoothChat extends Activity implements SensorEventListener {
 	public void onStart() {
 		super.onStart();
 		if (D) Log.e(TAG, "++ ON START ++");
-
 		// If BT is not on, request that it be enabled.
 		// setupChat() will then be called during onActivityResult
 		if (!mBluetoothAdapter.isEnabled()) {
@@ -266,9 +233,7 @@ public class BluetoothChat extends Activity implements SensorEventListener {
 		super.onResume();
 		//gyro
 		mSensorManager.registerListener(this, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_GAME);
-
 		if (D) Log.e(TAG, "+ ON RESUME +");
-
 		// Performing this check in onResume() covers the case in which BT was
 		// not enabled during onStart(), so we were paused to enable it...
 		// onResume() will be called when ACTION_REQUEST_ENABLE activity returns.
@@ -284,7 +249,6 @@ public class BluetoothChat extends Activity implements SensorEventListener {
 	@SuppressLint("NewApi")
 	private void setupChat() {
 		Log.d(TAG, "setupChat()");
-
 		// Initialize the array adapter for the conversation thread
 		mConversationArrayAdapter = new ArrayAdapter<String>(this, R.layout.message);
 		mConversationView = (ListView) findViewById(R.id.in);
@@ -305,7 +269,6 @@ public class BluetoothChat extends Activity implements SensorEventListener {
 		Dance = (ImageView) findViewById(R.id.imageViewdance);
 		Dance.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				soundPool.play(vdance, 1.0F, 1.0F, 0, 0, 1.0F);
 				sendMessage("ATALL\r");
 			}
 		});
@@ -313,42 +276,35 @@ public class BluetoothChat extends Activity implements SensorEventListener {
 		DownMove = (ImageView) findViewById(R.id.imageViewdown);
 		DownMove.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				soundPool.play(vpress, 1.0F, 1.0F, 0, 0, 1.0F);
 				sendMessage("ATBW\r");
 			}
 		});
 		UpMove = (ImageView) findViewById(R.id.imageViewup);
 		UpMove.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				soundPool.play(vpress, 1.0F, 1.0F, 0, 0, 1.0F);
 				sendMessage("ATFW\r");
 			}
 		});
 		RightMove = (ImageView) findViewById(R.id.imageViewright);
 		RightMove.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				soundPool.play(vpress, 1.0F, 1.0F, 0, 0, 1.0F);
 				sendMessage("ATTR\r");
 			}
 		});
 		LeftMove = (ImageView) findViewById(R.id.imageViewleft);
 		LeftMove.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				soundPool.play(vpress, 1.0F, 1.0F, 0, 0, 1.0F);
 				sendMessage("ATTL\r");
 			}
 		});
 		ResetMove = (ImageView) findViewById(R.id.imageViewreset);
 		ResetMove.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				soundPool.play(vbrake, 1.0F, 1.0F, 0, 0, 1.0F);
 				sendMessage("ATST\r");
 			}
 		});
-
 		// Initialize the BluetoothChatService to perform bluetooth connections
 		mChatService = new BluetoothChatService(this, mHandler);
-
 		// Initialize the buffer for outgoing messages
 		mOutStringBuffer = new StringBuffer("");
 	}
@@ -392,7 +348,6 @@ public class BluetoothChat extends Activity implements SensorEventListener {
 		// TODO Auto-generated method stub
 		for (int i = 0; i < 3; i++)
 			vector[i] = event.values[i];
-
 		Gyro_X.setText("X : " + String.format("%.3f", vector[0]));
 		Gyro_Y.setText("Y : " + String.format("%.3f", vector[1]));
 		Gyro_Z.setText("Z : " + String.format("%.3f", vector[2]));
@@ -410,24 +365,19 @@ public class BluetoothChat extends Activity implements SensorEventListener {
 		}
 	}
 
-	/**
-	 * Sends a message.
-	 *
-	 * @param message A string of text to send.
-	 */
+	//Sends a message.
+	//@param message A string of text to send.
 	private void sendMessage(String message) {
 		// Check that we're actually connected before trying anything
 		if (mChatService.getState() != BluetoothChatService.STATE_CONNECTED) {
 			Toast.makeText(this, R.string.not_connected, Toast.LENGTH_SHORT).show();
 			return;
 		}
-
 		// Check that there's actually something to send
 		if (message.length() > 0) {
 			// Get the message bytes and tell the BluetoothChatService to write
 			byte[] send = message.getBytes();
 			mChatService.write(send);
-
 			// Reset out string buffer to zero and clear the edit text field
 			mOutStringBuffer.setLength(0);
 		}
@@ -516,11 +466,8 @@ public class BluetoothChat extends Activity implements SensorEventListener {
 		return false;
 	}
 
-
 	@Override
 	public void onAccuracyChanged(Sensor sensor, int accuracy) {
 		// TODO Auto-generated method stub
-
 	}
-
 }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package www.terasic.com.tw.SPIDER;
+package terasic.spider.SPIDER;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;

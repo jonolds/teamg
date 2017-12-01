@@ -28,7 +28,7 @@
 #define KneeB_Full_Grab  		-80
 #define Ankle_Full_Grab  	  -15
 
-bool CSpider::m_bDebugDump = true;
+bool CSpider::m_bDebugDump = false;
 
 CSpider::CSpider(): m_bAbort(false) {
 	int szMotorID[] = {
@@ -190,29 +190,29 @@ void CSpider::MoveBackward(uint8_t Repeat_Num) {
 		MoveTripod(TRIPOD1,CSpiderLeg::Knee,Knee_Up_Base,Knee_Up_Base,Knee_Up_Base);
 		WaitReady(ReadyTime());
 		sleep(1);
-		GetAllAngles();
+		//GetAllAngles();
 		MoveTripod(TRIPOD1,CSpiderLeg::Hip,HipF_Base-20,HipM_Base-20,HipB_Base-20);
 		MoveTripod(TRIPOD2,CSpiderLeg::Hip,HipF_Base+20,HipM_Base+20,HipB_Base+20);
 		WaitReady(ReadyTime());
 		sleep(1);
-		GetAllAngles();
+		//GetAllAngles();
 		MoveTripod(TRIPOD1,CSpiderLeg::Knee,Knee_Down_Base,Knee_Down_Base,Knee_Down_Base);
 		WaitReady(ReadyTime());
 		sleep(1);
-		GetAllAngles();
+		//GetAllAngles();
 		MoveTripod(TRIPOD2,CSpiderLeg::Knee,Knee_Up_Base,Knee_Up_Base,Knee_Up_Base);
 		WaitReady(ReadyTime());
 		sleep(1);
-		GetAllAngles();
+		//GetAllAngles();
 		MoveTripod(TRIPOD1,CSpiderLeg::Hip,HipF_Base+20,HipM_Base+20,HipB_Base+20);
 		MoveTripod(TRIPOD2,CSpiderLeg::Hip,HipF_Base-20,HipM_Base-20,HipB_Base-20);
 		WaitReady(ReadyTime());
 		sleep(1);
-		GetAllAngles();
+		//GetAllAngles();
 		MoveTripod(TRIPOD2,CSpiderLeg::Knee,Knee_Down_Base,Knee_Down_Base,Knee_Down_Base);
 		WaitReady(ReadyTime());
 		sleep(1);
-		GetAllAngles();
+		//GetAllAngles();
 	}
 	m_bAbort = false;
 	if (m_bDebugDump)

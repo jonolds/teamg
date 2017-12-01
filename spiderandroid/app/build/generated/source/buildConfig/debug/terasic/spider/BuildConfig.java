@@ -1,11 +1,11 @@
 /**
  * Automatically generated file. DO NOT MODIFY
  */
-package www.terasic.com.tw.SPIDER;
+package terasic.spider.SPIDER;
 
 public final class BuildConfig {
   public static final boolean DEBUG = Boolean.parseBoolean("true");
-  public static final String APPLICATION_ID = "www.terasic.com.tw.SPIDER";
+  public static final String APPLICATION_ID = "terasic.spider.SPIDER";
   public static final String BUILD_TYPE = "debug";
   public static final String FLAVOR = "";
   public static final int VERSION_CODE = 1;
